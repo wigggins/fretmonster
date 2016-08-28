@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  
+
   // Sets up size for the overlays
   $('.js-overlay').css('position', 'fixed')
   var el = $('.js-overlay');
@@ -12,7 +12,7 @@ $(document).ready(function(){
   $('body').click(function(){
     $('.js-overlay.fixed').hide();
   });
-  
+
   // to launch scale picker overlay
   $('.js-summonScalePicker').click(function(){
     $('.js-scalePicker').fadeIn('fast');
@@ -30,9 +30,9 @@ $(document).ready(function(){
 $(window).on('load', function(){
 
   // Lets the user tweak or toggle some misc display options.
-  
+
           // Notes-Interval toggle
-          
+
               $('.showNotes').click(function(){
                 var replaceWith;
                 $('.note[data-active="true"]').each(function(i,obj){
@@ -60,8 +60,9 @@ $(window).on('load', function(){
               });
 
           // Triads-Root toggle
-          
+
               $('.highlightRoot').click(function(){
+				$('.note').removeClass('highlight pointer');
                 $('.note[data-active="true"]').each(function(i,obj){
                   if ( ($(obj).attr('data-interval') == "3") || ($(obj).attr('data-interval') == "5") || ($(obj).attr('data-interval') == "b3") ) {
                     $(this).removeClass('highlight');
@@ -72,28 +73,63 @@ $(window).on('load', function(){
                 });
                 highlightingRoot = true;
                 highlightingTriads = false;
+				highlightingCustom = false;
                 $('.highlightTriads').removeClass('active--toggle');
+				$('.highlightCustom').removeClass('active--toggle');
                 $(this).addClass('active--toggle');
                 return false;
               });
 
               $('.highlightTriads').click(function(){
+				$('.note').removeClass('highlight pointer');
                 $('.note[data-active="true"]').each(function(i,obj){
                   if ( ($(obj).attr('data-interval') == "3") || ($(obj).attr('data-interval') == "5") || ($(obj).attr('data-interval') == "b3") || ($(obj).attr('data-interval') == "1")) {
                     $(this).addClass('highlight');
                   }
                 });
                 highlightingRoot = false;
+				highlightingCustom = false;
                 highlightingTriads = true;
                 $('.highlightRoot').removeClass('active--toggle');
+				$('.highlightCustom').removeClass('active--toggle');
                 $(this).addClass('active--toggle');
                 return false;
               });
-          
+
+			  $('.highlightCustom').click(function(){
+				  highlightingRoot = false;
+                  highlightingTriads = false;
+                  highlightingCustom = true;
+
+				  $('.note').removeClass('highlight').addClass('pointer');
+				  $('.highlightTriads').removeClass('active--toggle');
+				  $('.highlightRoot').removeClass('active--toggle');
+                  $(this).addClass('active--toggle');
+				  return false;
+			  });
+
+
+			  $('.note').click(function(){
+				  if(highlightingCustom) {
+					  var noteValue = $(this).data('note');
+
+					  if($(this).hasClass('highlight')) {
+						  $(`.note[data-note=${noteValue}]`).each(function(i,obj){
+		                      $(this).removeClass('highlight');
+		                  });
+					  } else {
+						  $(`.note[data-note=${noteValue}]`).each(function(i,obj){
+							 $(this).addClass('highlight');
+						 });
+					  }
+				  }
+			  });
+
+
           // Instrument changer
-          
+
               $('.instrumentGuitar').click(function(){
-              
+
               });
 
               // Bass: remove top two strings
@@ -101,11 +137,11 @@ $(window).on('load', function(){
                 for (var i = 0; i < 2; i++) {
                   $('.string').eq(i).hide();
                   $('.string').eq(i+1).find('.fret--hasBG').css('border','none');
-                  $('.string').eq(i+1).find('.fret--open').css('border','none');                  
+                  $('.string').eq(i+1).find('.fret--open').css('border','none');
                 }
                 return false;
               });
 
-          
+
 
 });
