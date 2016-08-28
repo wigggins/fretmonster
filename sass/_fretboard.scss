@@ -42,7 +42,7 @@ $stringWidth: 3px;
 // Fretboard
 
 .fretboard_backdrop {
-  
+
 }
 
 /* Scrollable overflowing tables, via http://www.maxdesign.com.au/2013/03/22/simple-responsive-table/ */
@@ -53,18 +53,18 @@ $stringWidth: 3px;
          	overflow-y: auto;
           position: relative;
          	_overflow: auto;
-         	margin: 0 auto 1em; 
+         	margin: 0 auto 1em;
           padding: 1em 0 3.5em; }
-           
+
            // so the main fretboard is on same row as the string labels. Probably hacky but okay for now.
            .fretboard { position: absolute; left: 3rem; }
-         
+
          /* These next two lines add the scrollbar before you scroll (if overflow is present) */
           .table_wrapper::-webkit-scrollbar {
           	-webkit-appearance: none;
           	width: 14px;
           	height: 14px; }
-          
+
           .table_wrapper::-webkit-scrollbar-thumb {
           	border-radius: 8px;
           	border: 3px solid #fff;
@@ -95,7 +95,7 @@ table.string_labels {
   }
 }
 
-.cell { 
+.cell {
   width: $cellWidth;
   height: $cellHeight;
   position: relative;
@@ -103,8 +103,8 @@ table.string_labels {
 
 
 
-.string { 
-  border-bottom: $stringWidth solid $stringColor; 
+.string {
+  border-bottom: $stringWidth solid $stringColor;
 }
 
 .fret--hasNote {}
@@ -138,7 +138,7 @@ table.string_labels {
 
 
 
-.note { 
+.note {
   height: $dotSize;
   width: $dotSize;
   border-radius: $dotSize / 2;
@@ -154,13 +154,17 @@ table.string_labels {
   color: $noteColor;
   z-index: 1;
   font-size: 0.875rem;
+  transition: background .2s ease;
 }
 
-.note[data-interval='1'],
 .note.highlight {
   background: $highlightBG;
   color: $bodyBG;
   font-weight: bold;
+}
+
+.note.pointer {
+	cursor: pointer;
 }
 
 .note[data-interval='1'] {
